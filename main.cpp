@@ -16,7 +16,7 @@ int main() {
     char values[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
     drawGrid(values);
 
-    // Track whose turn it is
+    // To keep switching between X and O
     char currentPlayer = 'X';
 
     // The Main Game Loop
@@ -24,7 +24,7 @@ int main() {
         int input;
         bool validMove = false; // Reset to false at the start of every turn
 
-        // The Trap: Keep asking until validMove becomes true
+
         while (validMove == false) {
             std::cout << "Player " << currentPlayer << ", type a number (1-9): ";
             std::cin >> input;
