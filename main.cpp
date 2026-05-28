@@ -13,37 +13,47 @@
 
 int main() {
     system("clear");
-    char values[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+    char values[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    
+    // We draw the numbered board ONCE before the game loop starts
     drawGrid(values);
 
-    // To keep switching between X and O
+    // Game always starts with X first
     char currentPlayer = 'X';
 
     // The Main Game Loop
     for (int turn = 0; turn < 9; turn++) {
         int input;
-        bool validMove = false; // Reset to false at the start of every turn
+        bool validMove = false; 
 
-
+        //Get the input FIRST
         while (validMove == false) {
             std::cout << "Player " << currentPlayer << ", type a number (1-9): ";
             std::cin >> input;
 
-            // Check 1: Is it between 1 and 9?
-            // Check 2: Is that exact spot still an empty space?
-            if (input >= 1 && input <= 9 && values[input - 1] == ' ') {
-                values[input - 1] = currentPlayer; // Claim the spot
-                validMove = true;                  // Break out of the trap!
+            // We want an input between 1 and 9 and it also shouldn't be square that's already taken 
+            if (input >= 1 && input <= 9 && values[input - 1] != 'X' && values[input - 1] != 'O') {
+                values[input - 1] = currentPlayer; 
+                validMove = true;                  
             } else {
                 std::cout << "Invalid move or spot already taken! Try again.\n";
             }
         }
 
-        // Clear and redraw
+        //The Board Wipe (Happens AFTER they successfully make their first move)
+        if (turn == 0) {
+            for (int i = 0; i < 9; i++) {
+                if (values[i] != 'X' && values[i] != 'O') {
+                    values[i] = ' '; // Wipe the remaining numbers
+                }
+            }
+        }
+
+        //Clear the terminal and draw the newly updated board
         system("clear");
         drawGrid(values);
 
-        // Swap the player
+        //Swap the player
         if (currentPlayer == 'X') {
             currentPlayer = 'O';
         } else {
